@@ -13,9 +13,11 @@
     <script>
         window.addEventListener('load', function() {
         const rootDiv = document.getElementById('root');
-        if (!rootDiv || rootDiv.innerHTML.trim() === '') {
-          window.location.href = '/';
-        }
+        setTimeout(() => {
+          if (!rootDiv || rootDiv.innerHTML.trim() === '') {
+            window.location.href = '/';
+          }
+        }, 500);
       });
     </script>
   </body>

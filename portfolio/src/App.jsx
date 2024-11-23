@@ -1,6 +1,6 @@
 import './App.css'
 import Header from './components/Header';
-import { BrowserRouter, Route, Routes, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PortfolioItems from './components/PortfolioItems';
 import WorkExperience from './components/WorkExperience';
 import Bio from './components/Bio';
@@ -11,7 +11,7 @@ import "./components/css/homecontent.css";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Header />
       <Routes>
         <Route path="/works" element={<PortfolioItems />} />
@@ -19,12 +19,10 @@ function App() {
         <Route path="/about" element={<Bio />} />
         <Route path="/contact" element={<WorkExperience />} />
         <Route path="/" element={<HomeContent></HomeContent>} />
-        <Route path="*">
-          <Redirect to="/" />
-        </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       {/* <Footer /> */}
-    </BrowserRouter>
+    </Router>
   );
 }
 

@@ -5,7 +5,7 @@ const ArticleOuterSpace = () => {
     return (
         <div className="text-center">
             <br></br>
-            <BoldHeading text="How Trade Relations Play A Role In Ensuring International Peace"/>
+            <BoldHeading text="Outer Space, Stories, and Pop Culture"/>
             <br></br>
             <TextParagraph text="The Moon. The Sun. Other planets. Aliens. Stars. Constellations. Galaxies. The universe. Multiverses." />
             <TextParagraph text="These topics have fascinated people for centuries, and it’s easy to see why. Space represents many ideas and themes, and its endless vastness gives creative artists so much freedom in constructing and crafting vibrant and diverse narratives, stories, characters, settings and aesthetics." />

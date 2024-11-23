@@ -22,9 +22,7 @@ const Article = () => {
     const articleContentRenderer = () => {
         switch (articleId) {
             case traderelations:
-                return (
-                    <ArticleTradeRelHeading />
-                );
+                return (<ArticleTradeRelHeading />);
             case outerspace:
                 return (<ArticleOuterSpace/>);
             case mythology:
@@ -50,7 +48,6 @@ const Article = () => {
             <Link to="/works">
                 <div className="ml-5 font-piazzolla text-green-600 text-base font-bold text underline">Back to Index</div>
             </Link>
-            <h2>ArticleId: {articleId}</h2>
             {articleContentRenderer()}
         </div>
 

@@ -5,7 +5,7 @@ const ArticleMythology = () => {
     return (
         <div className="text-center">
             <br></br>
-            <BoldHeading text="How Trade Relations Play A Role In Ensuring International Peace"/>
+            <BoldHeading text="Are Different Interpretations of Mythology Valid?"/>
             <br></br>
             <TextParagraph text="Let me guess- you read the headline, thought of the movie Adipurush, and immediately disagreed, didn’t you?" />
             <TextParagraph text="Some of you must have heard of the Percy Jackson series, the God of War games, and of course, the portrayal of the Nordic gods in the Marvel Cinematic Universe. These hugely successful franchises revolve around Greek and Norse mythology, but with several artistic liberties taken. (And not a lot of controversy around them, mind you.)" />

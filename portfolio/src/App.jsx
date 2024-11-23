@@ -8,6 +8,7 @@ import Certifications from './components/Certifications';
 import HomeContent from './components/HomeContent';
 // import Footer from './components/Footer';
 import "./components/css/homecontent.css";
+import Article from './components/Article';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 
       <Routes>
         <Route path="/works" element={<PortfolioItems />} />
+        <Route path="/works/:articleId" element={<Article />} />
         <Route path="/certifications" element={<Certifications />} />
         <Route path="/contact" element={<WorkExperience />} />
         <Route path="/" element={<HomeContent></HomeContent>} />

@@ -3,7 +3,7 @@ import Header from './components/Header';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PortfolioItems from './components/PortfolioItems';
 import WorkExperience from './components/WorkExperience';
-import Bio from './components/Bio';
+// import Bio from './components/Bio';
 import Certifications from './components/Certifications';
 import HomeContent from './components/HomeContent';
 // import Footer from './components/Footer';
@@ -18,7 +18,6 @@ function App() {
       <Routes>
         <Route path="/works" element={<PortfolioItems />} />
         <Route path="/certifications" element={<Certifications />} />
-        <Route path="/about" element={<Bio />} />
         <Route path="/contact" element={<WorkExperience />} />
         <Route path="/" element={<HomeContent></HomeContent>} />
         <Route path="*" element={<Navigate to="/" />} />

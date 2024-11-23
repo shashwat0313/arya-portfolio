@@ -8,9 +8,9 @@ export default {
       fontFamily: {
         piazzolla: ['Piazzolla', 'serif'],
       },
-      screens:{
-        'xs' : '450px',
-      }
+      // screens:{
+      //   'xs' : '450px',
+      // }
     },
   },
   plugins: [],

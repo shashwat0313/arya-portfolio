@@ -1,4 +1,10 @@
 /* Tailwind CSS */
+@media (max-width: 450px) {
+  .space-x-1 {
+    margin-right: 0.25rem; /* Adjust as needed */
+  }
+}
+
 .bg-gray-900 {
     background-color: #1a1a1a;
   }

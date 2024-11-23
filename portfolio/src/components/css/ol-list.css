@@ -1,0 +1,34 @@
+/* ol-list.css */
+/* ol-list.css */
+/* ol-list.css */
+ol.custom-ol-list {
+    list-style: none; /* Remove default list styling */
+    counter-reset: item; /* Initialize the counter */
+    padding-left: 20px; /* Add padding to the left to indent the list */
+}
+
+ol.custom-ol-list > li {
+    counter-increment: item; /* Increment the counter */
+    margin-bottom: 10px; /* Add some space between list items */
+}
+
+ol.custom-ol-list > li::before {
+    content: counters(item, ".") ". "; /* Display the counter */
+    font-weight: 600; /* Optional: make the counter bold */
+}
+
+ol.custom-ol-list ol {
+    list-style: none; /* Remove default list styling for nested lists */
+    counter-reset: subitem; /* Initialize the sub-counter */
+    padding-left: 20px; /* Add padding to the left to indent the nested list */
+}
+
+ol.custom-ol-list ol > li {
+    counter-increment: subitem; /* Increment the sub-counter */
+    margin-bottom: 10px; /* Add some space between nested list items */
+}
+
+ol.custom-ol-list ol > li::before {
+    content: counters(item, ".") "." counters(subitem, ".") " "; /* Display the nested counter */
+    font-weight: 600; /* Optional: make the counter bold */
+}

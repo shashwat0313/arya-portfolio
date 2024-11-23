@@ -1,0 +1,9 @@
+/* web/portfolio/src/components/css/list.css */
+ul.custom-list {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+ul.custom-list li {
+    margin-bottom: 10px;
+}

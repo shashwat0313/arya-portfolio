@@ -12,7 +12,9 @@ import "./components/css/homecontent.css";
 function App() {
   return (
     <Router>
+      <div  style={{color:'#453c4a', backgroundColor: '#f5ebe6', minHeight: '100vh' }}>
       <Header />
+
       <Routes>
         <Route path="/works" element={<PortfolioItems />} />
         <Route path="/certifications" element={<Certifications />} />
@@ -21,6 +23,7 @@ function App() {
         <Route path="/" element={<HomeContent></HomeContent>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      </div>
       {/* <Footer /> */}
     </Router>
   );

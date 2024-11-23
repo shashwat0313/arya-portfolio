@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 const TextParagraph = ({text}) => {
     return (
         <div className=' text-2xl  text-lg-max-w text-left text-black-500 font-piazzolla font-light'>
-            <p>{text}</p>
+            <p style={{whiteSpace:"pre-wrap"}}>{text}</p>
             <br></br>
         </div>
     );

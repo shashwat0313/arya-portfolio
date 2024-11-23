@@ -4,9 +4,19 @@ import { Link } from 'react-router-dom';
 import {traderelations, outerspace, mythology, internship, titansub, blrheatwave, myopia, artlimitations} from './article-ids'
 import ArticleOuterSpace from './article-content/soft-articles/ArticleOuterSpace';
 import ArticleMythology from './article-content/soft-articles/ArticleMythology';
+import ArticleInternShip from './article-content/internship/ArticleInternship';
+import { useEffect } from 'react';
+import ArticleTitanSub from './article-content/hard-articles/ArticleTitanSub';
+import ArticleBLRHeatwave from './article-content/hard-articles/ArticleBLRHeatwave';
+import PoemMyopia from './article-content/poems/PoemMyopia';
+import PoemArtLimitations from './article-content/poems/PoemArtLimitations';
 
 const Article = () => {
     const { articleId } = useParams();
+    
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [articleId]);
 
     // IIFE = Immediately Invoked Function Expression
     const articleContentRenderer = () => {
@@ -20,17 +30,17 @@ const Article = () => {
             case mythology:
                 return (<ArticleMythology/>);
             case internship:
-                return <></>;
+                return (<ArticleInternShip/>);
             case titansub:
-                return <></>;
+                return (<ArticleTitanSub/>);
             case blrheatwave:
-                return <></>;
+                return (<ArticleBLRHeatwave/>);
             case myopia:
-                return <></>;
+                return (<PoemMyopia/>);
             case artlimitations:
-                return <></>;
+                return (<PoemArtLimitations/>);
             default:
-                return null;
+                return (<>Invalid Link</>);
         }
     };
 

@@ -5,11 +5,12 @@ import PortfolioItems from './components/PortfolioItems';
 import WorkExperience from './components/WorkExperience';
 import Bio from './components/Bio';
 import Certifications from './components/Certifications';
+import HomeContent from './components/HomeContent';
 // import Footer from './components/Footer';
+import "./components/css/homecontent.css";
 
 function App() {
   return (
-    // <div>hello</div>
     <Router>
       <Header />
       <Routes>
@@ -17,7 +18,7 @@ function App() {
         <Route path="/certifications" element={<Certifications />} />
         <Route path="/about" element={<Bio />} />
         <Route path="/contact" element={<WorkExperience />} />
-        <Route path="/" element={<div>Welcome to Arya&apos;s Portfolio</div>} />
+        <Route path="/" element={<HomeContent></HomeContent>} />
       </Routes>
       {/* <Footer /> */}
     </Router>

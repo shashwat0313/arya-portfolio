@@ -4,7 +4,11 @@ export default {
     './index.html',
     './src/**/*.{js,jsx,ts,tsx}',],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        piazzolla: ['Piazzolla', 'serif'],
+      },
+    },
   },
   plugins: [],
 }

@@ -11,9 +11,11 @@ const Contact = () => {
             </Link>
             <br></br>
             <br></br>
-            <Heading1 text="Contact Info:"/>
-            <BoldHeading text="Email:"/>
-            <BoldHeading text="aryashrestha105@gmail.com"/>
+            <Heading1 text="You can email me at:"/>
+
+            <a href="mailto:aryashrestha105@gmail.com" className="text-blue-900 underline">
+                <BoldHeading text="aryashrestha105@gmail.com" />
+            </a>
         </div>
         </>
     );

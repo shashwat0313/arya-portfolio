@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Heading1 from './text/Heading1';
 import TextParagraph from './text/TextParagraph';
 import BoldHeading from './text/BoldHeading';

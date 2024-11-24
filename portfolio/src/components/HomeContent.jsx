@@ -18,7 +18,7 @@ const HomeContent = () => {
             <div className="relative overflow-hidden">
                 {loading && <div className="absolute inset-0 flex items-center justify-center">Loading...</div>}
                 <img 
-                    src="homepage-img.jpg"
+                    src="https://res.cloudinary.com/dp05xipet/image/upload/v1732460568/arya/tle6sjomuj4gpnqkvkt5.jpg"
                     alt="Descriptive Alt Text" 
                     className={`h-[48vh] lg:h-[60vh] w-full object-contain object-top ${loading ? 'opacity-0' : 'opacity-100'}`} 
                     onLoad={handleImageLoad} 

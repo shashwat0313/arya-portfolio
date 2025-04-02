@@ -5,7 +5,7 @@ import PortfolioItems from './components/PortfolioItems';
 // import WorkExperience from './components/WorkExperience';
 // import Bio from './components/Bio'; 
 import Certifications from './components/Certifications';
-import HomeContent from './components/HomeContent';
+import HomeContent from './components/HomeContent'; 
 // import Footer from './components/Footer';
 import "./components/css/homecontent.css";
 import Article from './components/Article';

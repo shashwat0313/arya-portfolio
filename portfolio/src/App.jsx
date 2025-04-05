@@ -2,18 +2,20 @@ import './App.css'
 import Header from './components/Header';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PortfolioItems from './components/PortfolioItems';
-// import WorkExperience from './components/WorkExperience';
-// import Bio from './components/Bio'; 
 import Certifications from './components/Certifications';
 import HomeContent from './components/HomeContent';
-// import Footer from './components/Footer';
 import "./components/css/homecontent.css";
 import Article from './components/Article';
 import Contact from './components/Contact';
+import Redirect404Handler from './Redirect404Handler';
 
 function App() {
+
   return (
     <Router>
+
+      <Redirect404Handler/>
+  
       <div  style={{color:'#453c4a', backgroundColor: '#f5ebe6', minHeight: '100vh' }}>
       <Header />
 

@@ -1,12 +1,13 @@
 import BoldHeading from "./text/BoldHeading";
 import Heading1 from "./text/Heading1";
 import { Link } from "react-router-dom";
+import { BASE_URL } from '../Constants';
 
 const Contact = () => {
     return (
         <>
         <div className="text-center">
-            <Link to="/">
+            <Link to={`${BASE_URL}`}>
             <div className=" font-piazzolla text-green-600 text-base font-bold underline">Back to Homepage</div>
             </Link>
             <br></br>

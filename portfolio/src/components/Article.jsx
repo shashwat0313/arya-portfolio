@@ -1,7 +1,8 @@
 import { Navigate, useParams } from 'react-router-dom';
 import ArticleTradeRelHeading from './article-content/soft-articles/ArticleTradeRelations';
 import { Link } from 'react-router-dom';
-import {traderelations, outerspace, mythology, internship, titansub, blrheatwave, myopia, artlimitations} from './article-ids'
+import { BASE_URL } from '../Constants';
+import { traderelations, outerspace, mythology, internship, titansub, blrheatwave, myopia, artlimitations } from './article-ids';
 import ArticleOuterSpace from './article-content/soft-articles/ArticleOuterSpace';
 import ArticleMythology from './article-content/soft-articles/ArticleMythology';
 import ArticleInternShip from './article-content/internship/ArticleInternship';
@@ -18,7 +19,6 @@ const Article = () => {
         window.scrollTo(0, 0);
     }, [articleId]);
 
-    // IIFE = Immediately Invoked Function Expression
     const articleContentRenderer = () => {
         switch (articleId) {
             case traderelations:
@@ -38,14 +38,14 @@ const Article = () => {
             case artlimitations:
                 return (<PoemArtLimitations/>);
             default:
-                return (<Navigate to="/works" />);
+                return (<Navigate to={`${BASE_URL}/works`} />);
         }
     };
 
     return (
         <div className='lg-max-w'>
             <br></br>
-            <Link to="/works">
+            <Link to={`${BASE_URL}/works`}>
                 <div className="ml-5 font-piazzolla text-green-600 text-base font-bold text underline">Back to Index</div>
             </Link>
             {articleContentRenderer()}

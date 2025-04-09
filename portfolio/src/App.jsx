@@ -1,6 +1,6 @@
 import './App.css'
 import Header from './components/Header';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import PortfolioItems from './components/PortfolioItems';
 import Certifications from './components/Certifications';
 import HomeContent from './components/HomeContent';
@@ -8,30 +8,54 @@ import "./components/css/homecontent.css";
 import Article from './components/Article';
 import Contact from './components/Contact';
 import Redirect404Handler from './Redirect404Handler';
+import { BASE_URL } from './Constants';
 
 function App() {
 
   return (
     <Router>
+      <Redirect404Handler />
 
-      <Redirect404Handler/>
-  
-      <div  style={{color:'#453c4a', backgroundColor: '#f5ebe6', minHeight: '100vh' }}>
-      <Header />
+      <div style={{ color: '#453c4a', backgroundColor: '#f5ebe6', minHeight: '100vh' }}>
+        <Header />
 
-      <Routes>
-        <Route path="/works" element={<PortfolioItems />} />
-        <Route path="/works/:articleId" element={<Article />} />
-        <Route path="/certifications" element={<Certifications />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/" element={<HomeContent></HomeContent>} />
-        <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/works/*" element={<Navigate to="/" />} />
-      </Routes>
+        <Routes>
+          {/* Parent Route for BASE_URL */}
+          <Route path={`${BASE_URL}`} element={<Outlet />}>
+            <Route path="works" element={<PortfolioItems />} />
+            <Route path="works/:articleId" element={<Article />} />
+            <Route path="certifications" element={<Certifications />} />
+            <Route path="contact" element={<Contact />} />
+            <Route index element={<HomeContent />} /> {/* Default route for BASE_URL */}
+            <Route path="*" element={<Navigate to={`${BASE_URL}`} />} />
+          </Route>
+        </Routes>
       </div>
       {/* <Footer /> */}
     </Router>
   );
+
+  // return (
+  //   <Router>
+
+  //     <Redirect404Handler/>
+  
+  //     <div  style={{color:'#453c4a', backgroundColor: '#f5ebe6', minHeight: '100vh' }}>
+  //     <Header />
+
+  //     <Routes>
+  //       <Route path="/works" element={<PortfolioItems />} />
+  //       <Route path="/works/:articleId" element={<Article />} />
+  //       <Route path="/certifications" element={<Certifications />} />
+  //       <Route path="/contact" element={<Contact />} />
+  //       <Route path="/" element={<HomeContent></HomeContent>} />
+  //       <Route path="*" element={<Navigate to="/" />} />
+  //       <Route path="/works/*" element={<Navigate to="/" />} />
+  //     </Routes>
+  //     </div>
+  //     {/* <Footer /> */}
+  //   </Router>
+  // );
 }
 
 export default App;

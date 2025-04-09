@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Heading1 from './text/Heading1';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../Constants';
 
 const Certifications = () => {
     const [loading, setLoading] = useState([true, true, true, true]);
@@ -16,7 +17,7 @@ const Certifications = () => {
     return (
     <>
         <div className='lg-max-w text-center'>
-            <Link to="/">
+            <Link to={`${BASE_URL}/`}>
             <div className=" font-piazzolla text-green-600 text-base font-bold underline">Back to Homepage</div>
             </Link>
         </div>

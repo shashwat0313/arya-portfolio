@@ -3,7 +3,7 @@ name: Deploy React App to Pages
 
 on:
   push:
-    branches: ["master"]
+    branches: ["routing-handling-gpages-v1"]
   workflow_dispatch:
 
 permissions:
@@ -22,27 +22,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # - name: Set Up Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 18
-      #     cache: 'npm'
-
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
           cache-dependency-path: portfolio/package-lock.json
-
-      # - name: Verify Lock File
-      #   run: |
-      #     if [ ! -f portfolio/package-lock.json ]; then
-      #       echo "package-lock.json not found! Generating one..."
-      #       cd portfolio
-      #       npm install --package-lock-only
-      #       cd ..
-      #     fi
 
       - name: Install Dependencies
         run: npm install

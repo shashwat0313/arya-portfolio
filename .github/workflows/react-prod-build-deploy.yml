@@ -3,7 +3,7 @@ name: Deploy React App to Pages
 
 on:
   push:
-    branches: ["routing-handling-gpages-v1"]
+    branches: ["development"]
   workflow_dispatch:
 
 permissions:

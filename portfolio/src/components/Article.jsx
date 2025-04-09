@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import ArticleTradeRelHeading from './article-content/soft-articles/ArticleTradeRelations';
 import { Link } from 'react-router-dom';
 import { BASE_URL } from '../Constants';
@@ -38,7 +38,7 @@ const Article = () => {
             case artlimitations:
                 return (<PoemArtLimitations/>);
             default:
-                return (<>Invalid Link</>);
+                return (<Navigate to={`${BASE_URL}/works`} />);
         }
     };
 

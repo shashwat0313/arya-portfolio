@@ -3,7 +3,7 @@ name: Deploy React App to Pages
 
 on:
   push:
-    branches: ["text-article-decouple"]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:

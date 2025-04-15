@@ -9,6 +9,7 @@ import Article from './components/Article';
 import Contact from './components/Contact';
 import Redirect404Handler from './Redirect404Handler';
 import { BASE_URL } from './Constants';
+import TestGenericArticle from './components/markdownUtils/TestGenericArticle';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           {/* Parent Route for BASE_URL */}
           <Route path={`${BASE_URL}`} element={<Outlet />}>
+            <Route path="test" element={ <TestGenericArticle /> } />
             <Route path="works" element={<PortfolioItems />} />
             <Route path="works/:articleId" element={<Article />} />
             <Route path="certifications" element={<Certifications />} />

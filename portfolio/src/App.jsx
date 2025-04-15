@@ -17,7 +17,7 @@ function App() {
     <Router>
       <Redirect404Handler />
 
-      <div style={{ color: '#453c4a', backgroundColor: '#f5ebe6', minHeight: '100vh' }}>
+      <div style={{ color: '#453c4a', backgroundColor: '#9792fc', minHeight: '100vh' }}>
         <Header />
 
         <Routes>

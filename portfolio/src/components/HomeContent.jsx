@@ -3,6 +3,9 @@ import Heading1 from './text/Heading1';
 import TextParagraph from './text/TextParagraph';
 import BoldHeading from './text/BoldHeading';
 import TwoColumns from './TwoColumns';
+import TheGoodEdgeIntern from './experiences/TheGoodEdgeIntern';
+import KaizenCollegeNewsletterSeniorReporter from './experiences/KiazenCollegeNewsletterSeniorReporter';
+import ThePRactice from './experiences/ThePRactice';
 // import '../assets/homepage-img.jpg';
 
 const HomeContent = () => {
@@ -18,7 +21,8 @@ const HomeContent = () => {
             <div className="relative overflow-hidden">
                 {loading && <div className="absolute inset-0 flex items-center justify-center">Loading...</div>}
                 <img 
-                    src="https://res.cloudinary.com/dp05xipet/image/upload/v1732460568/arya/tle6sjomuj4gpnqkvkt5.jpg"
+                    // src="https://res.cloudinary.com/dp05xipet/image/upload/v1732460568/arya/tle6sjomuj4gpnqkvkt5.jpg"
+                    src='https://res.cloudinary.com/dp05xipet/image/upload/v1744733018/PXL_20241226_090814840_2_rdfdid.jpg'
                     alt="Descriptive Alt Text" 
                     className={`h-[48vh] lg:h-[60vh] w-full object-contain object-top ${loading ? 'opacity-0' : 'opacity-100'}`} 
                     onLoad={handleImageLoad} 
@@ -32,7 +36,8 @@ const HomeContent = () => {
             <br></br>
             <br></br>
             <BoldHeading text='Work Experience' />
-            <TwoColumns/>
+            <TwoColumns leftContent={ThePRactice} rightContent={TheGoodEdgeIntern}/>
+            <TwoColumns leftContent={KaizenCollegeNewsletterSeniorReporter} />
         </div>
     );
 };

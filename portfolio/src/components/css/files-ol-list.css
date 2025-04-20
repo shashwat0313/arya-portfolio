@@ -1,0 +1,10 @@
+.file-list {
+    list-style: none; /* Remove default list styling */
+    padding-left: 0; /* Remove indentation */
+    margin: 0; /* Remove margin */
+}
+
+.file-list > li {
+    margin-bottom: 5px; /* Add spacing between list items */
+    font-size: 1rem; /* Optional: Adjust font size */
+}

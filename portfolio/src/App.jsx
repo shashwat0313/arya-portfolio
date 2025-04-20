@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import Redirect404Handler from './Redirect404Handler';
 import { BASE_URL } from './Constants';
 import TestGenericArticle from './components/markdownUtils/TestGenericArticle';
+import EditWorkflow from './components/hidden/EditWorkflow';
 
 function App() {
 
@@ -29,6 +30,13 @@ function App() {
             <Route path="certifications" element={<Certifications />} />
             <Route path="contact" element={<Contact />} />
             <Route index element={<HomeContent />} /> {/* Default route for BASE_URL */}
+            
+            {/* workflow edit routes */}
+            <Route path='edit-workflow' element={<Outlet/>}>
+              <Route index element={<EditWorkflow/>}/>
+            </Route>
+
+            {/* fallback */}
             <Route path="*" element={<Navigate to={`${BASE_URL}`} />} />
           </Route>
         </Routes>

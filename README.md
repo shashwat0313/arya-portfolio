@@ -1,0 +1,1 @@
+[![Deploy React App to Pages](https://github.com/aryashrestha105/arya-portfolio/actions/workflows/react-prod-build-deploy.yml/badge.svg?branch=main)](https://github.com/aryashrestha105/arya-portfolio/actions/workflows/react-prod-build-deploy.yml)

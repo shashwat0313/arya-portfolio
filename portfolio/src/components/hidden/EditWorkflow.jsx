@@ -6,6 +6,8 @@ import Button from "./Button";
 import Step2Login from "./Step2Login";
 import FileList from "./FileList";
 import FileViewer from "./FileViewer";
+import EditFile from "./EditFile";
+import CreateFile from "./CreateFile";
 import {getFilesList, fetchFileContent} from "../apis/GithubApis"
 import {loginSubmitHandlerInternal, logoutHandler, checkAuthStatus} from "./auth/AuthHandlers"
 
@@ -18,6 +20,9 @@ export default function EditWorkflow() {
     const [selectedFilePath, setSelectedFilePath] = useState("");
     const [fileContent, setFileContent] = useState("");
     const [actionCompleted, setActionCompleted] = useState(false); // State to track if an action is completed
+    const [editingFilePath, setEditingFilePath] = useState(""); // New state for editing file
+    const [creatingFilePath, setCreatingFilePath] = useState(""); // New state for creating file
+    const [activeAction, setActiveAction] = useState(""); // Track the currently active action
     const textAreaRef = useRef(null); // Reference for the text area
 
     useEffect(() => {
@@ -58,12 +63,51 @@ export default function EditWorkflow() {
         }
     }, [fileContent]);
 
+    useEffect(() => {
+        if ((editingFilePath || creatingFilePath) && textAreaRef.current) {
+            textAreaRef.current.scrollIntoView({ behavior: "smooth" }); // Scroll to the EditFile or CreateFile component
+        }
+    }, [editingFilePath, creatingFilePath]);
+
     function loginSubmitHandler(e) {
         e.preventDefault();
         const passcode = e.target.passcode.value;
 
         loginSubmitHandlerInternal(e, {setIsLoggedIn, setTokenExpiry, passcode})
     }
+
+    const handleActionSelection = (action) => {
+        if (activeAction) {
+            alert(`You have already selected the "${activeAction}" option. Please reload the page to select a different option.`);
+            return;
+        }
+
+        setActiveAction(action); // Set the active action
+
+        setSelectedFilePath(""); // Clear selected file path
+        setFileContent(""); // Clear file content
+        setActionCompleted(false); // Reset action completed state
+        setEditingFilePath(""); // Reset editing file path
+        setCreatingFilePath(""); // Reset creating file path
+
+        if (action === "create") {
+            setCreatingFilePath("new");
+        } else if (action === "edit") {
+            if (selectedFilePath) {
+                setEditingFilePath(selectedFilePath);
+            } else {
+                alert("Please select a file first.");
+            }
+        } else if (action === "view") {
+            if (selectedFilePath) {
+                fetchFileContent({ selectedFilePath, setFileContent })
+                    .then(() => setActionCompleted(true))
+                    .catch(() => alert("Failed to fetch file content."));
+            } else {
+                alert("Please select a file first.");
+            }
+        }
+    };
 
     return (
         <div className="lg-max-w mx-3">
@@ -110,30 +154,18 @@ export default function EditWorkflow() {
                     <li className="text-xl">
                         <div>
                             <p>Select an action:</p>
-                            <Button text="See File Content" buttonClickHandler={() => {
-                                if (selectedFilePath) {
-                                    fetchFileContent({ selectedFilePath, setFileContent })
-                                        .then(() => setActionCompleted(true)) // Mark action as completed on success
-                                        .catch(() => alert("Failed to fetch file content."));
-                                } else {
-                                    alert("Please select a file first.");
-                                }
-                            }} />
-                            <Button text="Create New File" buttonClickHandler={() => {
-                                const newFileName = prompt("Enter the name of the new file (with extension):");
-                                if (newFileName) {
-                                    alert(`Feature to create a new file named '${newFileName}' is under development.`);
-                                    setActionCompleted(true); // Mark action as completed
-                                }
-                            }} />
-                            <Button text="Edit Existing File" buttonClickHandler={() => {
-                                if (selectedFilePath) {
-                                    alert(`Feature to edit the file '${selectedFilePath}' is under development.`);
-                                    setActionCompleted(true); // Mark action as completed
-                                } else {
-                                    alert("Please select a file first.");
-                                }
-                            }} />
+                            <Button text="See File Content" 
+                                    buttonClickHandler={() => handleActionSelection("view")} 
+                                    disabled={!!activeAction && activeAction !== "view"} // Grey out if another action is active
+                            />
+                            <Button text="Create New File" 
+                                    buttonClickHandler={() => handleActionSelection("create")} 
+                                    disabled={!!activeAction && activeAction !== "create"} // Grey out if another action is active
+                            />
+                            <Button text="Edit Existing File" 
+                                    buttonClickHandler={() => handleActionSelection("edit")} 
+                                    disabled={!!activeAction && activeAction !== "edit"} // Grey out if another action is active
+                            />
                         </div>
                     </li>
                 )}
@@ -149,6 +181,19 @@ export default function EditWorkflow() {
                         />
                     </li>
                 )}
+
+                {editingFilePath && ( // Render EditFile component when editingFilePath is set
+                    <li className="text-xl" ref={textAreaRef}>
+                        <EditFile editingFilePath={editingFilePath} />
+                    </li>
+                )}
+
+                {creatingFilePath === "new" && ( // Render CreateFile component only when creatingFilePath is set
+                    <li className="text-xl" ref={textAreaRef}>
+                        <CreateFile fileList={markdownFiles} creatingFilePath="" />
+                    </li>
+                )}
+                
             </ol>
         </div>
     );

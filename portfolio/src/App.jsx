@@ -10,6 +10,8 @@ import Contact from './components/Contact';
 import Redirect404Handler from './Redirect404Handler';
 import { BASE_URL } from './Constants';
 import TestGenericArticle from './components/markdownUtils/TestGenericArticle';
+import EditWorkflow from './components/hidden/EditWorkflow';
+import TwoLevelListParser from './TwoLevelListParser/Parser';
 
 function App() {
 
@@ -23,6 +25,7 @@ function App() {
         <Routes>
           {/* Parent Route for BASE_URL */}
           <Route path={`${BASE_URL}`} element={<Outlet />}>
+            <Route path='parser-test' element= {<TwoLevelListParser/>} />
             <Route path="test" element={ <TestGenericArticle /> } />
             <Route path="works" element={<PortfolioItems />} />
             <Route path="works/:articleId" element={<Article />} />

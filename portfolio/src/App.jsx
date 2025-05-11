@@ -11,7 +11,7 @@ import Redirect404Handler from './Redirect404Handler';
 import { BASE_URL } from './Constants';
 import TestGenericArticle from './components/markdownUtils/TestGenericArticle';
 import EditWorkflow from './components/hidden/EditWorkflow';
-import TwoLevelListParser from './TwoLevelListParser/Parser';
+import TestPortfolioItems from './components/TestPortfolioItems';
 
 function App() {
 
@@ -25,13 +25,20 @@ function App() {
         <Routes>
           {/* Parent Route for BASE_URL */}
           <Route path={`${BASE_URL}`} element={<Outlet />}>
-            <Route path='parser-test' element= {<TwoLevelListParser/>} />
+            <Route path='works-test' element={<TestPortfolioItems/>}/>
             <Route path="test" element={ <TestGenericArticle /> } />
             <Route path="works" element={<PortfolioItems />} />
             <Route path="works/:articleId" element={<Article />} />
             <Route path="certifications" element={<Certifications />} />
             <Route path="contact" element={<Contact />} />
             <Route index element={<HomeContent />} /> {/* Default route for BASE_URL */}
+            
+            {/* workflow edit routes */}
+            <Route path='edit-workflow' element={<Outlet/>}>
+              <Route index element={<EditWorkflow/>}/>
+            </Route>
+
+            {/* fallback */}
             <Route path="*" element={<Navigate to={`${BASE_URL}`} />} />
           </Route>
         </Routes>

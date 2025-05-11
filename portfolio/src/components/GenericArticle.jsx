@@ -8,6 +8,13 @@ export default function GenericArticle({ articleId }) {
     useEffect(() => {
         console.log("articleId:", articleId); // Log the articleId prop
 
+        // Check if the articleId is a web link
+        if (articleId.startsWith("http://") || articleId.startsWith("https://")) {
+            console.log("Redirecting to external link:", articleId);
+            window.location.replace(articleId); // Use window.location.replace to handle external links
+            return;
+        }
+
         // Import all .md files recursively from the markdowns folder
         const markdownFiles = import.meta.glob("../assets/markdowns/**/*.md", { as: "raw" });
         const filePath = Object.keys(markdownFiles).find((path) => path.endsWith(`/${articleId}.md`));

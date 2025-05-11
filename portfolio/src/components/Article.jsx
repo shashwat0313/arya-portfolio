@@ -1,50 +1,24 @@
 import { useParams } from 'react-router-dom';
-// import ArticleTradeRelHeading from './article-content/soft-articles/ArticleTradeRelations';
 import { Link } from 'react-router-dom';
 import { BASE_URL } from '../Constants';
-// import { traderelations, outerspace, mythology, internship, titansub, blrheatwave, myopia, artlimitations } from './article-ids';
-// import ArticleOuterSpace from './article-content/soft-articles/ArticleOuterSpace';
-// import ArticleMythology from './article-content/soft-articles/ArticleMythology';
-// import ArticleInternShip from './article-content/internship/ArticleInternship';
 import { useEffect } from 'react';
-// import ArticleTitanSub from './article-content/hard-articles/ArticleTitanSub';
-// import ArticleBLRHeatwave from './article-content/hard-articles/ArticleBLRHeatwave';
-// import PoemMyopia from './article-content/poems/PoemMyopia';
-// import PoemArtLimitations from './article-content/poems/PoemArtLimitations';
-// import TestGenericArticle from './markdownUtils/TestGenericArticle';
 import GenericArticle from './GenericArticle';
 
 const Article = () => {
     const { articleId } = useParams();
-    
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [articleId]);
+    let decodedArticleId = decodeURIComponent(articleId); // Decode the articleId
 
-    // const articleContentRenderer = () => {
-    //     switch (articleId) {
-    //         case traderelations:
-    //             return (<ArticleTradeRelHeading />);
-    //         case outerspace:
-    //             return (<ArticleOuterSpace/>);
-    //         case mythology:
-    //             return (<ArticleMythology/>);
-    //         case internship:
-    //             return (<ArticleInternShip/>);
-    //         case titansub:
-    //             return (<ArticleTitanSub/>);
-    //         case blrheatwave:
-    //             return (<ArticleBLRHeatwave/>);
-    //         case myopia:
-    //             return (<PoemMyopia/>);
-    //         case artlimitations:
-    //             return (<PoemArtLimitations/>);
-    //         case "test":
-    //             return (<TestGenericArticle />);
-    //         default:
-    //             return (<Navigate to={`${BASE_URL}/works`} />);
-    //     }
-    // };
+    useEffect(() => {
+        console.log("Decoded articleId:", decodedArticleId); // Log the decoded articleId
+        window.scrollTo(0, 0);
+    }, [decodedArticleId]);
+
+    // Check if the decoded articleId is a URL
+    // if (decodedArticleId.startsWith("http://") || decodedArticleId.startsWith("https://")) {
+    //     console.log("Redirecting to external link:", decodedArticleId);
+    //     window.location.replace(decodedArticleId); // Redirect to the link
+    //     return null;
+    // }
 
     return (
         <div className='lg-max-w'>
@@ -52,10 +26,9 @@ const Article = () => {
             <Link to={`${BASE_URL}/works`}>
                 <div className="ml-5 font-piazzolla text-green-600 text-base font-bold text underline">Back to Index</div>
             </Link>
-            <GenericArticle articleId={articleId} />
+            <GenericArticle articleId={decodedArticleId} />
         </div>
-
-    )
+    );
 };
 
 export default Article;

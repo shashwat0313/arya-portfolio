@@ -18,5 +18,5 @@
 ## Limitations on Art > artlimitations
 
 # Test L1 Title ol
--- bold text test
+## bold text test
 ## L1 id > l1id

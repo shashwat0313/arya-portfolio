@@ -6,7 +6,7 @@ export default function Step2Login({isLoggedIn, loginSubmitHandler, tokenExpiry,
         <>
         {isLoggedIn ? (
             <>
-                You are already authenticated. Time remaining: {tokenExpiry.hours} hours and {tokenExpiry.minutes} minutes.
+                You are authenticated. Time remaining: {tokenExpiry.hours} hours and {tokenExpiry.minutes} minutes.
                 <span style={{ color: "green" }}> ✔</span>
                 <Button text={"Logout"} buttonClickHandler={logoutHandler}/>
             </>

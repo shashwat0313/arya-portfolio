@@ -10,6 +10,8 @@ export default function CreateFile({ fileList, creatingFilePath }) {
     const [fileContent, setFileContent] = useState("");
     const [isSaving, setIsSaving] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [waitTime, setWaitTime] = useState(0); // State to track remaining wait time
+    const [waitInterval, setWaitInterval] = useState(null); // State to store the interval ID
 
     // Restore data from localStorage on mount
     useEffect(() => {
@@ -33,6 +35,15 @@ export default function CreateFile({ fileList, creatingFilePath }) {
     }, [articleId, fileContent, category]);
 
     const handleSave = () => {
+        if (waitTime > 0) {
+            // Cancel the timer if the button is pressed again during the wait
+            clearInterval(waitInterval);
+            setWaitTime(0);
+            setWaitInterval(null);
+            setErrorMessage("Save action canceled.");
+            return;
+        }
+
         if (!articleId || !category || !fileContent) {
             setErrorMessage("Please fill in all fields before saving.");
             return;
@@ -49,41 +60,67 @@ export default function CreateFile({ fileList, creatingFilePath }) {
             return;
         }
 
-        setIsSaving(true);
+        const userConfirmed = window.confirm(
+            "Are you sure you want to save this file? You will have to wait 10 seconds to confirm. Press the button again to cancel."
+        );
+        if (!userConfirmed) return;
 
-        const filePath = `portfolio/src/assets/markdowns/${category || "uncategorized"}/${articleId}.md`;
-
-        axios
-            .post(
-                `${BACKEND_BASE_URL}/github-api/commit-file`,
-                {
-                    filePath,
-                    content: fileContent,
-                    commitMessage: `Creating new file: ${articleId}`,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
+        setWaitTime(10); // Initialize wait time to 10 seconds
+        const interval = setInterval(() => {
+            setWaitTime((prev) => {
+                if (prev <= 1) {
+                    clearInterval(interval);
+                    setWaitInterval(null);
+                    return 0;
                 }
-            )
-            .then(() => {
-                setErrorMessage("");
-                alert("File created successfully.");
-                setArticleId("");
-                setCategory("");
-                setFileContent("");
-                localStorage.removeItem("createFile_articleId"); // Clear localStorage on successful save
-                localStorage.removeItem("createFile_content");
-                localStorage.removeItem("createFile_category");
-                setIsSaving(false);
-            })
-            .catch((error) => {
-                console.error("Error creating file:", error);
-                setErrorMessage("Failed to create file.");
-                setIsSaving(false);
+                return prev - 1;
             });
+        }, 1000);
+        setWaitInterval(interval);
+
+        setTimeout(() => {
+            if (waitTime === 0) {
+                setIsSaving(true);
+
+                const filePath = `portfolio/src/assets/markdowns/${category || "uncategorized"}/${articleId}.md`;
+
+                axios
+                    .post(
+                        `${BACKEND_BASE_URL}/github-api/commit-file`,
+                        {
+                            filePath,
+                            content: fileContent,
+                            commitMessage: `Creating new file: ${articleId}`,
+                        },
+                        {
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    )
+                    .then(() => {
+                        setErrorMessage("");
+                        alert("File created successfully.");
+                        setArticleId("");
+                        setCategory("");
+                        setFileContent("");
+                        localStorage.removeItem("createFile_articleId"); // Clear localStorage on successful save
+                        localStorage.removeItem("createFile_content");
+                        localStorage.removeItem("createFile_category");
+                        setIsSaving(false);
+                    })
+                    .catch((error) => {
+                        console.error("Error creating file:", error);
+                        if (error.response && error.response.data && error.response.data.error) {
+                            setErrorMessage(`Failed to create file: ${error.response.data.error}`);
+                        } else {
+                            setErrorMessage("Failed to create file due to an unknown error.");
+                        }
+                        setIsSaving(false);
+                    });
+            }
+        }, 10000); // 10-second mandatory wait
     };
 
     const validateArticleId = (id) => /^[a-z]*$/.test(id); // Allow empty string for validation
@@ -99,7 +136,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
     };
 
     return (
-        <div className="lg-max-w mx-3">
+        <div className="">
             <div>
                 <label htmlFor="articleId">Article ID (unique, lowercase, no special characters):</label>
                 <input
@@ -146,20 +183,26 @@ export default function CreateFile({ fileList, creatingFilePath }) {
                     id="fileContent"
                     value={fileContent}
                     onChange={(e) => setFileContent(e.target.value)}
-                    style={{
-                        width: "100%",
-                        height: "300px",
-                        marginBottom: "10px",
-                        caretWidth: "2px", // Make the cursor thicker
+                    style={{ 
+                        width: "100%", 
+                        height: "75vh", // Set height to 35% of the viewport height
+                        marginTop: "10px", 
                         padding: "8px", // Add padding to the text
                         border: "3px solid black", // Make the border thicker and set to black
                         borderRadius: "4px", // Add slight rounding to the corners
+                        caretWidth: "2px", // Make the cursor thicker
                     }}
                 />
             </div>
             {errorMessage && <div style={{ color: "red", marginBottom: "10px" }}>{errorMessage}</div>}
             <Button
-                text={isSaving ? "Saving..." : "Save File"}
+                text={
+                    waitTime > 0
+                        ? `Waiting ${waitTime} sec... (Press again to cancel)`
+                        : isSaving
+                        ? "Saving..."
+                        : "Save File"
+                }
                 buttonClickHandler={handleSave}
                 disabled={isSaving}
             />

@@ -1,14 +1,28 @@
 import axios from "axios";
 import { BACKEND_BASE_URL } from "../../Constants";
 
-async function getFilesList({token, setMarkdownFiles, setFilesStatus}){
+async function getFilesList({token, setMarkdownFiles, setFilesStatus}) {
     axios.get(`${BACKEND_BASE_URL}/github-api/files-list`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     })
         .then(response => {
-            setMarkdownFiles(response.data.filesList.filter(file => file.endsWith(".md")));
+            const allFiles = response.data.filesList;
+
+            // Filter files under the portfolio/src/assets/markdowns/ folder
+            const markdownFiles = allFiles.filter(file => 
+                file.endsWith(".md") && file.startsWith("portfolio/src/assets/markdowns/")
+            );
+
+            // Place List.md at the first position if it exists
+            const listMdIndex = markdownFiles.findIndex(file => file.endsWith("List.md"));
+            if (listMdIndex !== -1) {
+                const [listMdFile] = markdownFiles.splice(listMdIndex, 1);
+                markdownFiles.unshift(listMdFile);
+            }
+
+            setMarkdownFiles(markdownFiles);
             setFilesStatus(true);
         })
         .catch(() => {

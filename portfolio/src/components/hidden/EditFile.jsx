@@ -11,11 +11,6 @@ export default function EditFile({ editingFilePath }) {
     const [waitTime, setWaitTime] = useState(0); // State to track remaining wait time
     const [waitInterval, setWaitInterval] = useState(null); // State to store the interval ID
     const textAreaRef = useRef(null);
-    // const [currentEditingFilePath, setCurrentEditingFilePath] = useState(editingFilePath);
-
-    // const [inProgressFilePath, setInProgressFilePath] = useState(null);
-    // const [inProgressFileContent, setInProgressFileContent] = useState(null);
-    // const [isRestore, setIsRestore] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -23,22 +18,6 @@ export default function EditFile({ editingFilePath }) {
             alert("You must be logged in to edit files.");
             return;
         }
-
-        // const inProgressFilePathLS = localStorage.getItem("edit_filePath");
-        // const inProgressFileContentLS = localStorage.getItem("edit_fileContent");
-
-        // if(inProgressFilePathLS && inProgressFileContentLS){
-        //     setInProgressFilePath(inProgressFilePathLS)
-        //     setInProgressFileContent(inProgressFileContentLS)
-
-        //     const userResponse = window.confirm(
-        //         "Content for the file: " + inProgressFilePath + " found. Do you wish to restore?");
-
-        //     if(userResponse){
-        //         setIsRestore(true);
-        //         setCurrentEditingFilePath(inProgressFilePath)
-        //     }
-        // }
 
         // Fetch file content from GitHub
         axios

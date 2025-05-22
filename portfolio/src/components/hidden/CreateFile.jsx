@@ -12,6 +12,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
     const [errorMessage, setErrorMessage] = useState("");
     const [waitTime, setWaitTime] = useState(0); // State to track remaining wait time
     const [waitInterval, setWaitInterval] = useState(null); // State to store the interval ID
+    const [saveTimerId, setSaveTimerId] = useState(null)
 
     // Restore data from localStorage on mount
     useEffect(() => {
@@ -35,12 +36,14 @@ export default function CreateFile({ fileList, creatingFilePath }) {
     }, [articleId, fileContent, category]);
 
     const handleSave = () => {
-        if (waitTime > 0) {
+        if(saveTimerId && waitTime > 0){
             // Cancel the timer if the button is pressed again during the wait
             clearInterval(waitInterval);
             setWaitTime(0);
             setWaitInterval(null);
             setErrorMessage("Save action canceled.");
+            clearTimeout(saveTimerId)
+            setSaveTimerId(null);
             return;
         }
 
@@ -60,10 +63,10 @@ export default function CreateFile({ fileList, creatingFilePath }) {
             return;
         }
 
-        const userConfirmed = window.confirm(
-            "Are you sure you want to save this file? You will have to wait 10 seconds to confirm. Press the button again to cancel."
-        );
-        if (!userConfirmed) return;
+        // const userConfirmed = window.confirm(
+        //     "Are you sure you want to save this file? You will have to wait 10 seconds to confirm. Press the button again to cancel."
+        // );
+        // if (!userConfirmed) return;
 
         setWaitTime(10); // Initialize wait time to 10 seconds
         const interval = setInterval(() => {
@@ -78,7 +81,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
         }, 1000);
         setWaitInterval(interval);
 
-        setTimeout(() => {
+        const saveTimerId_curr = setTimeout(() => {
             if (waitTime === 0) {
                 setIsSaving(true);
 
@@ -121,9 +124,11 @@ export default function CreateFile({ fileList, creatingFilePath }) {
                     });
             }
         }, 10000); // 10-second mandatory wait
+
+        setSaveTimerId(saveTimerId_curr);
     };
 
-    const validateArticleId = (id) => /^[a-z]*$/.test(id); // Allow empty string for validation
+    const validateArticleId = (id) => /^[a-z-]*$/.test(id); // Allow lowercase letters and hyphens
 
     const handleArticleIdChange = (e) => {
         const id = e.target.value;
@@ -131,7 +136,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
             setArticleId(id);
             setErrorMessage(""); // Clear error message on valid input
         } else {
-            setErrorMessage("Article ID must only contain lowercase letters and no special characters.");
+            setErrorMessage("Article ID must only contain lowercase letters or hyphens.");
         }
     };
 
@@ -155,6 +160,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
                     disabled={!!creatingFilePath} // Disable input if pre-filled
                 />
             </div>
+                {errorMessage && <div style={{ color: "red", marginBottom: "10px" }}>{errorMessage}</div>}
             <div>
                 <label htmlFor="category">Category:</label>
                 <select
@@ -168,7 +174,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
                         border: "3px solid black", // Make the border thicker and set to black
                         borderRadius: "4px", // Add slight rounding to the corners
                     }}
-                >
+                    >
                     <option value="">Select a category</option>
                     <option value="soft-articles">Soft Article</option>
                     <option value="hard-articles">Hard Article</option>
@@ -194,7 +200,6 @@ export default function CreateFile({ fileList, creatingFilePath }) {
                     }}
                 />
             </div>
-            {errorMessage && <div style={{ color: "red", marginBottom: "10px" }}>{errorMessage}</div>}
             <Button
                 text={
                     waitTime > 0

@@ -18,7 +18,9 @@
 ## Limitations on Art > artlimitations
 
 # Test L1 Title ol
--* actual books test
+
+-- bold text test with unordered list
+
 ## bold text test > okay
-## L1 id > l1id
+## L1 id expected to be l1id > l1id
 ## test abc article > testabc

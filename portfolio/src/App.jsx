@@ -12,8 +12,13 @@ import { BASE_URL } from './Constants';
 import TestGenericArticle from './components/markdownUtils/TestGenericArticle';
 import EditWorkflow from './components/hidden/EditWorkflow';
 import TestPortfolioItems from './components/TestPortfolioItems';
+import { useEffect } from 'react';
+import { checkAndBustCacheIfNeeded } from './utils/versionCheck';
 
 function App() {
+  useEffect(() => {
+    checkAndBustCacheIfNeeded();
+  }, []);
 
   return (
     <Router>

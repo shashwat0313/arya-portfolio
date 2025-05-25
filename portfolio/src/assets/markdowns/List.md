@@ -23,4 +23,4 @@
 
 ## bold text test > okay
 ## L1 id expected to be l1id > l1id
-## test abc article > testabc
+## test abc article > test-two

@@ -143,14 +143,16 @@ export default function EditWorkflow() {
             alert(`Warning: You are currently in the "${activeAction}" option. Switching to "${action}" may cause unsaved changes.`);
         }
 
-        setActiveAction(action); // Set the active action
+        // setActiveAction(action); // Set the active action
         
         if (action === "create") {
+            setActiveAction(action);
             setCreatingFilePath("new");
             setEditingFilePath(""); // Reset editing file path
             setIsActive(true)
         } else if (action === "edit") {
             if (selectedFilePath) {
+                setActiveAction(action);
                 setEditingFilePath(selectedFilePath); // Set the selected file path for editing
                 setCreatingFilePath(""); // Reset creating file path
                 setIsActive(true)
@@ -161,6 +163,7 @@ export default function EditWorkflow() {
             console.log("selectedfilepath:" + selectedFilePath);
             
             if (selectedFilePath) {
+                setActiveAction(action);
                 fetchFileContent({ selectedFilePath, setFileContent })
                     .then(() => setActionCompleted(true))
                     .catch(() => alert("Failed to fetch file content."));

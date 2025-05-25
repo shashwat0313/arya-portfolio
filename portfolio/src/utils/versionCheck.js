@@ -1,7 +1,7 @@
 export async function checkAndBustCacheIfNeeded() {
     try {
         console.log("[versionCheck] Fetching /version.json...");
-        const res = await fetch('/version.json', { cache: 'no-store' });
+        const res = await fetch('/arya-portfolio/version.json', { cache: 'no-store' });
         const text = await res.text();
         let version;
         try {

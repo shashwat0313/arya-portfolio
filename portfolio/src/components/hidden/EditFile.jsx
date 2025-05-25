@@ -11,11 +11,6 @@ export default function EditFile({ editingFilePath }) {
     const [waitTime, setWaitTime] = useState(0); // State to track remaining wait time
     const [waitInterval, setWaitInterval] = useState(null); // State to store the interval ID
     const textAreaRef = useRef(null);
-    // const [currentEditingFilePath, setCurrentEditingFilePath] = useState(editingFilePath);
-
-    // const [inProgressFilePath, setInProgressFilePath] = useState(null);
-    // const [inProgressFileContent, setInProgressFileContent] = useState(null);
-    // const [isRestore, setIsRestore] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -24,23 +19,6 @@ export default function EditFile({ editingFilePath }) {
             return;
         }
 
-        // const inProgressFilePathLS = localStorage.getItem("edit_filePath");
-        // const inProgressFileContentLS = localStorage.getItem("edit_fileContent");
-
-        // if(inProgressFilePathLS && inProgressFileContentLS){
-        //     setInProgressFilePath(inProgressFilePathLS)
-        //     setInProgressFileContent(inProgressFileContentLS)
-
-        //     const userResponse = window.confirm(
-        //         "Content for the file: " + inProgressFilePath + " found. Do you wish to restore?");
-
-        //     if(userResponse){
-        //         setIsRestore(true);
-        //         setCurrentEditingFilePath(inProgressFilePath)
-        //     }
-        // }
-
-        // Fetch file content from GitHub
         axios
             .get(`${BACKEND_BASE_URL}/github-api/file-content`, {
                 params: {
@@ -64,11 +42,9 @@ export default function EditFile({ editingFilePath }) {
 
     const handleSave = () => {
         if (waitTime > 0) {
-            // Cancel the timer if the button is pressed again during the wait
             clearInterval(waitInterval);
             setWaitTime(0);
             setWaitInterval(null);
-            alert("Save action canceled.");
             return;
         }
 
@@ -94,6 +70,7 @@ export default function EditFile({ editingFilePath }) {
                 return prev - 1;
             });
         }, 1000);
+        
         setWaitInterval(interval);
 
         setTimeout(() => {

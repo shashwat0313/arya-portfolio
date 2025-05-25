@@ -12,6 +12,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
     const [errorMessage, setErrorMessage] = useState("");
     const [waitTime, setWaitTime] = useState(0); // State to track remaining wait time
     const [waitInterval, setWaitInterval] = useState(null); // State to store the interval ID
+    const [timeoutRef, setTimeoutRef] = useState(null);
 
     // Restore data from localStorage on mount
     useEffect(() => {
@@ -38,6 +39,11 @@ export default function CreateFile({ fileList, creatingFilePath }) {
         if (waitTime > 0) {
             // Cancel the timer if the button is pressed again during the wait
             clearInterval(waitInterval);
+            setTimeoutRef((prev_timer_id) => {
+                clearTimeout(prev_timer_id);
+                setTimeoutRef(null);
+                console.log("old timer cleared old id: " + prev_timer_id);
+            })
             setWaitTime(0);
             setWaitInterval(null);
             setErrorMessage("Save action canceled.");
@@ -76,9 +82,10 @@ export default function CreateFile({ fileList, creatingFilePath }) {
                 return prev - 1;
             });
         }, 1000);
+        
         setWaitInterval(interval);
 
-        setTimeout(() => {
+        const timer_id = setTimeout(() => {
             if (waitTime === 0) {
                 setIsSaving(true);
 
@@ -121,6 +128,12 @@ export default function CreateFile({ fileList, creatingFilePath }) {
                     });
             }
         }, 10000); // 10-second mandatory wait
+
+        setTimeoutRef((prev_timer_id) => {
+            clearInterval(prev_timer_id);
+            console.log("old timer id:" + prev_timer_id + " new timer id :" + timer_id);            
+            return timer_id;
+        });
     };
 
     const validateArticleId = (id) => /^[a-z]*$/.test(id); // Allow empty string for validation

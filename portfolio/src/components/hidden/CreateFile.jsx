@@ -36,7 +36,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
     }, [articleId, fileContent, category]);
 
     const handleSave = () => {
-        if(saveTimerId && waitTime > 0){
+        if(timeoutRef !== null && waitTime > 0){
             // Cancel the timer if the button is pressed again during the wait
             clearInterval(waitInterval);
             setTimeoutRef((prev_timer_id) => {
@@ -47,8 +47,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
             setWaitTime(0);
             setWaitInterval(null);
             setErrorMessage("Save action canceled.");
-            clearTimeout(saveTimerId)
-            setSaveTimerId(null);
+            console.log("create file save action cancelled");            
             return;
         }
 
@@ -68,12 +67,7 @@ export default function CreateFile({ fileList, creatingFilePath }) {
             return;
         }
 
-        // const userConfirmed = window.confirm(
-        //     "Are you sure you want to save this file? You will have to wait 10 seconds to confirm. Press the button again to cancel."
-        // );
-        // if (!userConfirmed) return;
-
-        setWaitTime(10); // Initialize wait time to 10 seconds
+        setWaitTime(10);
         const interval = setInterval(() => {
             setWaitTime((prev) => {
                 if (prev <= 1) {
